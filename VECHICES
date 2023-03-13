@@ -1,0 +1,1433 @@
+* {
+box-sizing: border-box;
+}
+.search {
+width: 100%;
+position: relative;
+display: flex;
+}
+
+.searchTerm {
+width: 80%;
+border: 3px solid #d40f36;
+border-right: none;
+padding: 5px;
+height: 40px;
+border-radius: 5px 0 0 5px;
+outline: none;
+color: black;
+}
+.searchButton {
+width: 10%;
+height: 40px;
+border: 1px solid #d40f36;
+background-image: linear-gradient (to right, red, #d40f36, #f70a61);
+text-align: center;
+color: #fff;
+border-radius: 0 5px 5px 0;
+cursor: pointer;
+font-size: 20px;
+}
+
+.searchButton: hover {
+background-position: right;
+}
+.userSearch {
+width: 20%;
+border: 1px solid #d40f36;
+border-right: none;
+padding: 5px;
+height: 30px;
+border-radius: 5px 0 0 5px;
+outline: none;
+color: #d40f36;
+}
+
+.usrBtn {
+width: 10%;
+height: 30px;
+border: 1px solid #d40f36;
+background-image: linear-gradient (to right, red, #d40f36, #f70a61);
+text-align: center;
+color: #fff;
+border-radius: 0 5px 5px 0;
+cursor: pointer;
+font-size: 20px;
+}
+
+.accept{
+width: 30%;
+height: 30px;
+border: 1px solid green;
+background-color: green;
+text-align: center;
+color: #fff;
+cursor: pointer;
+}
+
+.accept: hover {
+background-color: darkgreen;
+}
+
+.reject {
+width: 30%;
+height: 30px;
+border: 1px solid #d40f36;
+background-color: #d40f36;
+text-align: center;
+color: #fff;
+cursor: pointer;
+}
+
+.reject: hover {
+background-color: dark red;
+}
+
+.my Table {
+border-collapse: collapse;
+width: 90%;
+}
+#table-scroll {
+height: 2%;
+overflow: auto;
+margin-top: 20px;
+}
+
+.my Table th {
+border: 2px solid #d40f36;
+height: 50px;
+background-color: #d40f36;
+color: white;
+font-weight: bold;
+font-size: medium;
+text-align: center;
+width: fit-content;
+}
+.my Table td {
+padding: 10px;
+border: 2px solid #d40f36;
+height: 30px;
+font-weight: 500;
+}
+
+#modalpading {
+text-align: left;
+}
+
+body, h1, h2, h3, h4, h5 {font-family: "Poppins", sans-serif}
+body {font-size: 16px ;}
+.w3-half img {margin-bottom:-6px; margin-top: 16px; opacity: 0.8; cursor: pointer}
+.w3-half img: hover {opacity: 1}
+Home
+<! DOCTYPE html>
+<html lang="en">
+<Title>Home</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<script src = "js/adhome.js"></script>
+<body ng-app= "adHome" ng-controller="myCtrl" ng-init="loadTable ()">
+
+<! -- Sidebar/menu -->
+<nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding" style="z-index: 3; width: 300px; font-weight: bold;" id="mySidebar"><br>
+<a href="javascript: void (0)" onclick="w3_close ()" class="w3-button w3-hide-large w3-display-topleft" style="width: 100%; font-size: 22px">Close Menu</a>
+<div class="w3-container">
+<h3 class="w3-padding-64"><b>Welcome</b></h3>
+</div>
+<div class="w3-bar-block">
+
+<a href="#" class="w3-bar-item w3-button w3-hover-white">Search a Vehicle</a>
+<a href="#showcase" class="w3-bar-item w3-button w3-hover-white">User Directory</a>
+<a href="#applicant" class="w3-bar-item w3-button w3-hover-white">Applicants</a>
+<a ng-click="logout ()" class="w3-bar-item w3-button w3-hover-white">Log Out</a>
+<img src="img/home.svg" style="width: 100%; padding-top: 70 %;">
+</div>
+</nav>
+
+
+<! --! PAGE CONTENT! -->
+<div class="w3-main" style="margin-left: 340px; margin-right: 40px">
+
+<! -- Header -->
+<div class="w3-container" style="margin-top: 80px" id="showcase">
+<h1 class="w3-jumbo"><b>Admin</b></h1>
+<h1 class="w3-xxxlarge w3-text-red"><b>Search a vehicle</b></h1>
+<hr style="width: 50px; border: 5px solid #d40f36" class="w3-round">
+<div class="wrap">
+<div class="search">
+<input type="text" class="searchTerm" ng-model="vehnum" placeholder="Enter Vehicle Number">
+<button type="submit" class="searchButton" data-toggle="modal" ng-click= "searchVeh ()">
+<i class="fa fa-search"></i>
+</button>
+</div>
+</div>
+</div>
+
+<! -- Vehicle Registration Details -->
+<div id="myModal" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<! -- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times ;< /button>
+<h4 class="modal-title">Vehicle Details</h4>
+</div>
+<div class="modal-body">
+<div class="w3-row-padding">
+<div class="w3-container w3-margin-bottom">
+<ul class="w3-ul w3-light-grey w3-center">
+<li class="w3-red w3-xlarge w3-padding-32"> {{regnum}} </li>
+<li class="w3-padding-16" id="modalpading">Registered Owner :< b>  {{regOwner}}</b></li>
+<li class="w3-padding-16" id="modalpading">Make: <b>  {{make}}</b></li>
+<li class="w3-padding-16" id="modalpading">Model: <b>  {{model}}</b></li>
+<li class="w3-padding-16" id="modalpading">Month & Year: <b> {{month}} </b></li>
+<li class="w3-padding-16" id="modalpading">Color: <b> {{color}} </b></li>
+<li class="w3-padding-16" id="modalpading">Vehicle Type: <b> {{type}} </b></li>
+<li class="w3-padding-16" id="modalpading">Engine Displacement: <b> {{cc}} </b></li>
+<li class="w3-padding-16" id="modalpading">Chasses Number: <b> {{chnum}} </b></li>
+<li class="w3-padding-16" id="modalpading">Fuel Type: <b> {{fuel}} </b></li>
+<li class="w3-padding-16" id="modalpading">Engine Number: <b> {{enginenum}} </b></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<! -- User Directory -->
+<div class="w3-container" id="packages" style="margin-top: 75px">
+<h1 class="w3-xxxlarge w3-text-red"><b>User Directory</b></h1>
+<hr style="width: 50px; border: 5px solid #d40f36" class="w3-round">
+</div>
+
+<div id= "table-scroll">
+<table class="myTable">
+<TR>
+<td colspan="5"><div class= "search"><input type="text" class= "userSearch" placeholder="Search User" ng-model="searchus">
+<button type="submit" class="usrBtn" ng-click = "searchUser ()">
+<i class="fa fa-search"></i>
+</button></div>
+</td>
+</TR>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Phone Number</th>
+<th>Role</th>
+<th>Id Num</th></tr>
+<tr ng-model= "usVar" ng-hide="usVar">
+<td colspan="5">
+*No records available
+</td>
+</tr>
+<tr ng-repeat = "data in namesData">
+<td> {{data.uname}} </td>
+<td> {{data.mail}} </td>
+<td> {{data.num}}</td>
+<td> {{data.role}}</td>
+<td><a href="{{data. File}}" target="_blank" rel="no opener noreferrer">{{data.idnum}}</a></td>
+</tr>
+</table>
+</div>
+
+
+<! -- Contact -->
+<div class="w3-container" id="applicant" style="margin-top: 75px">
+<h1 class="w3-xxxlarge w3-text-red"><b>Applicants</b></h1>
+<hr style="width: 50px; border: 5px solid #d40f36" class="w3-round">
+<! -- <form action="/action_page.php" target="_blank">
+<div class="w3-section">
+<label>Name</label>
+<input class="w3-input w3-border" type="text" name="Name" required>
+</div>
+<div class="w3-section">
+<label>Email</label>
+<input class="w3-input w3-border" type="text" name="Email" required>
+</div>
+<div class="w3-section">
+<label>Message</label>
+<input class="w3-input w3-border" type="text" name="Message" required>
+</div>
+<button type="submit" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom">Send Message</button>
+</form>   -->
+<div id= "table-scroll">
+<table class="myTable" style="margin-bottom: 100px ;">
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Phone Number</th>
+<th>Role</th>
+<th>Id Num</th>
+<th>Action</th> </tr>
+<tr ng-model= "myVar" ng-hide="myVar">
+<td colspan="6">
+*No records available
+</td>
+</tr>
+<tr ng-repeat = "data in appData">
+<td>{{data.uname}}</td>
+<td> {{data.mail}}</td>
+<td> {{data.num}}</td>
+<td> {{data.role}} </td>
+<td><a href="{{data. File}}" target="_blank" rel="no opener noreferrer">{{data.idnum}}</a></td>
+<td style="text-align: center;">
+<button type="button" class="accept" ng-click="accept User (data)">&#10003</button>
+<button type="button" class="reject" ng-click="reject User (data)">&#10006</button>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+
+</body>
+</html>
+Insurance
+<! DOCTYPE html>
+<html lang="en">
+<Title>Home</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<link rel="stylesheet" href="css/pohome.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src = "js/insurance.js"></script>
+<body ng-app= "adHome" ng-controller="myCtrl" ng-init="loadTable()">
+
+<! -- Sidebar/menu -->
+<nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding" style="z-index: 3; width: 300px; font-weight: bold;" id="mySidebar"><br>
+<a href="javascript: void (0)" onclick="w3_close ()" class="w3-button w3-hide-large w3-display-topleft" style="width: 100%; font-size: 22px">Close Menu</a>
+<div class="w3-container">
+<h3 class="w3-padding-64"><b>Welcome</b></h3>
+</div>
+<div class="w3-bar-block">
+
+<a href="#" class="w3-bar-item w3-button w3-hover-white">Search a Vehicle</a>
+<a href="#myModal2" data-toggle="modal" class="w3-bar-item w3-button w3-hover-white">New Entry</a>
+<a href="" class="w3-bar-item w3-button w3-hover-white">Insurance Certificates</a>
+<a ng-click="logout ()” class="w3-bar-item w3-button w3-hover-white">Log Out</a>
+<img src="img/home.svg" style="width: 100%; padding-top: 70 %;">
+</div>
+</nav>
+
+
+<! --! PAGE CONTENT! -->
+<div class="w3-main" style="margin-left: 340px; margin-right: 40px">
+
+<! -- Header -->
+<div class="w3-container" style="margin-top: 80px" id="showcase">
+<h1 class="w3-jumbo"><b>Insurances Certification</b></h1>
+<h1 class="w3-xxxlarge w3-text-red"><b>Search a vehicle</b></h1>
+<hr style="width: 50px; border: 5px solid #d40f36" class="w3-round">
+<div class="wrap">
+<div class="search">
+<input type="text" class="searchTerm" ng-model="vehnum" placeholder="Enter Vehicle Number">
+<button type="submit" class="searchButton" data-toggle="modal" ng-click= "searchVeh ()">
+<i class="fa fa-search"></i>
+</button>
+</div>
+</div>
+</div>
+
+<! -- Vehicle Registration Details -->
+<div id="myModal" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<! -- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times ;< /button>
+<h4 class="modal-title">Vehicle Details</h4>
+</div>
+<div class="modal-body">
+<div class="w3-row-padding">
+<div class="w3-container w3-margin-bottom">
+<ul class="w3-ul w3-light-grey w3-center">
+<li class="w3-red w3-xlarge w3-padding-32"> {{regnum}} </li>
+<li class="w3-padding-16" id="modalpading">Registered Owner :< b> {{regOwner}} </b></li>
+<li class="w3-padding-16" id="modalpading">Make: <b> {{make}} </b></li>
+<li class="w3-padding-16" id="modalpading">Model: <b> {{model}} </b></li>
+<li class="w3-padding-16" id="modalpading">Month & Year: <b> {{month}} </b></li>
+<li class="w3-padding-16" id="modalpading">Color: <b> {{color}} </b></li>
+<li class="w3-padding-16" id="modalpading">Vehicle Type: <b> {{type}} </b></li>
+<li class="w3-padding-16" id="modalpading">Engine Displacement: <b> {{cc}} </b></li>
+<li class="w3-padding-16" id="modalpading">Chasses Number: <b> {{chnum}} </b></li>
+<li class="w3-padding-16" id="modalpading">Fuel Type: <b> {{fuel}} </b></li>
+<li class="w3-padding-16" id="modalpading">Engine Number: <b> {{enginenum}} </b></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<! -- New Pollution certificate Entry -->
+<div id="myModal2" class="modal fade" role="dialog">
+<div class="modal-dialog modal-lg">
+
+<! -- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times ;< /button>
+<h4 class="modal-title">Insurance Details</h4>
+</div>
+<div class="modal-body">
+<div class="container">
+<div class="row">
+<div class="form-group">
+<label class="control-label col-sm-2">Policy Number :< /label>
+<div class="col-sm-6">
+<input type="text" class="form-control" placeholder="Policy Number" ng-model="formData.policy" ng-change="checkpolicy ()">
+<div id='policy err' style='color: red; margin-bottom: 20px; display: none ;'>*Policy Number already exists</div>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="form-group">
+<label class="control-label col-sm-2">Registration Number :< /label>
+<div class="col-sm-6">
+<select class="form-control" ng-model="formData.regnum" ng-change= "ownerdetails ()">
+<option ng-selected = "true" disabled hidden>Select Registration Number</option>
+<option ng-repeat = "reg in registration"> {{reg.registerationNo}} </option>
+</select>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="form-group">
+<label class="control-label col-sm-2">Owner Details :< /label>
+<div class="col-sm-6">
+<input type="text" class="form-control" placeholder="Name and Address" ng-model="formData.owner">
+</div>
+</div>
+</div>
+<div class="row">
+<div class="form-group">
+<label class="control-label col-sm-2">Phone No :< /label>
+<div class="col-sm-6">
+<input type="text" id="phnum" class="form-control" placeholder="Enter Phone. No" ng-model="formData.phnum" ng-change= "phvalid ()">
+<div id="msg-error" class="form-group" style="color: red ;"> *Please enter a valid phone number</div>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="form-group">
+<label class="control-label col-sm-2">Email :< /label>
+<div class="col-sm-6">
+<input type="email" class="form-control" placeholder="Enter mail-id" ng-model="formData.mail">
+</div>
+</div>
+</div>
+<div class="row">
+<div class="form-group">
+<label class="control-label col-sm-2">Agency :< /label>
+<div class="col-sm-6">
+<input type="text" class="form-control" placeholder="Agency Name" ng-model="formData.agency">
+</div>
+</div>
+</div>
+<div class="row">
+<div class="form-group">
+<label class="control-label col-sm-2">Status :< /label>
+<div class="col-sm-6">
+<select class="form-control" ng-model="formData.status">
+<option value="A" >Active</option>
+<option value ="E">Expired</option>
+</select></div>
+</div>
+</div>
+<div class="row">
+<div class="form-group">
+<label class="control-label col-sm-2">Valid From :< /label>
+<div class="col-sm-6">
+<input type="date" class="form-control" placeholder="Valid From" ng-model="formData.validfrom">
+</div>
+</div>
+</div>
+<div class="row">
+<div class="form-group">
+<label class="control-label col-sm-2">Valid To :< /label>
+<div class="col-sm-6">
+<input type="date" class="form-control" placeholder="Valid To" ng-model="formData.validto">
+</div>
+</div>
+</div>
+<div class="row">
+<div class="form-group">
+<label class="control-label col-sm-2">Insurance Type :< /label>
+<div class="col-sm-6">
+<select class="form-control" ng-model="formData.type">
+<option value="Third Party" >Third Party</option>
+<option value="Comprehensive" >Comprehensive</option>
+</select></div>
+</div>
+</div>
+<div class="row">
+<div class="form-group">
+<label class="control-label col-sm-2">Insurance copy</label>
+<div class="col-sm-6">
+<input type="file" class="form-control" file-model="formData.file">
+</div>
+</div>
+</div>
+<div class="row">
+<div class="form-group">
+<label class="control-label col-sm-2">Remarks :< /label>
+<div class="col-sm-6">
+<input type="text" class="form-control" placeholder="Remarks" ng-model="formData.remarks">
+</div>
+</div>
+</div>
+</div>
+</div>
+<button type="button" class="btn-def" data-dismiss="modal" ng-click= "saveInsurance()">Submit</button>
+<button type="button" class="btn-close" data-dismiss="modal">Cancel</button>
+</div>
+
+</div>
+</div>
+
+<! -- Contact -->
+<div class="w3-container" id="applicant" style="margin-top: 75px">
+<h1 class="w3-xxxlarge w3-text-red"><b>Insurance Certificates</b></h1>
+<hr style="width: 50px; border: 5px solid #d40f36" class="w3-round">
+<div id= "table-scroll">
+<table class="myTable" style="margin-bottom: 100px ;">
+<TR>
+<td colspan="11"><div class= "search"><input type="text" class= "userSearch" placeholder="Policy Number" ng-model="polNum">
+<button type="submit" class="usrBtn" ng-click = "search Insurance ()">
+<i class="fa fa-search"></i>
+</button></div>
+</td>
+</TR>
+<tr>
+<th>Policy Number</th>
+<th>Vehicle Number</th>
+<th>Owner Details</th>
+<th>Phone Number</th>
+<th>Email</th>
+<th>Agency</th>
+<th>Insurance Type</th>
+<th>Valid From</th>
+<th>Valid To</th>
+<th>Status</th>
+<th>Remarks</th>
+</tr>
+<tr ng-model= "myVar" ng-hide="myVar">
+<td colspan="6">
+*No records available
+</td>
+</tr>
+<tr ng-repeat = "data in appData">
+<td><a href="{{data.document_url}}" target="_blank" rel="no opener noreferrer">{{data.policyNo}}</a></td>
+<td>{{data.vehicle_number}}</td>
+<td>{{data.owner}}</td>
+<td>{{data.phoneno}}</td>
+<td>{{data. Email}} </td>
+<td>{{data.agencyName}}</td>
+<td>{{data.insuranceType}}</td>
+<td>{{data.validFrom}}</td>
+<td>{{data.validTo}}</td>
+<td>{{data.status}}</td>
+<td>{{data.remarks}}</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div class="w3-container" id="applicant" style="margin-top: 75px">
+<h1 class="w3-xxxlarge w3-text-red"><b>Reminders</b></h1>
+<hr style="width: 50px; border: 5px solid #d40f36" class="w3-round">
+<div id= "table-scroll">
+<table class="myTable" style="margin-bottom: 100px ;">
+<TR>
+<td colspan="11"><div class= "search">
+<button type="button" class="notify-btn" data-dismiss="modal" ng-click= "sendnotification ()">Send Notification</button>
+</td>
+</TR>
+<tr>
+<th>Policy Number</th>
+<th>Vehicle Number</th>
+<th>Owner Details</th>
+<th>Phone Number</th>
+<th>Email</th>
+<th>Agency</th>
+<th>Insurance Type</th>
+<th>Valid From</th>
+<th>Valid To</th>
+<th>Status</th>
+<th>Remarks</th>
+</tr>
+<tr ng-model= "myVar" ng-hide="myVar">
+<td colspan="6">
+*No records available
+</td>
+</tr>
+<tr ng-repeat = "item in remData">
+<td><a href="{{item.document_url}}" target="_blank" rel="no opener noreferrer">{{item.policyNo}}</a></td>
+<td>{{item.registerationNo}}</td>
+<td>{{item. Owner}} </td>
+<td>{{item.phoneno}}</td>
+<td>{{item.email}}</td>
+<td>{{item.agencyName}}</td>
+<td>{{item.insuranceType}}</td>
+<td>{{item.validFrom}}</td>
+<td>{{item.validTo}}</td>
+<td>{{item. Status}} </td>
+<td>{{item. Remarks}} </td>
+</tr>
+</table>
+</div>
+</div>
+
+
+</div>
+
+</body>
+</html>
+Login
+<! DOCTYPE html>
+<html ng-app="myapp">
+<head>
+<title>Login</title>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/a81368914c.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
+<script src="js/login.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body ng-controller= "myCtrl">
+<img class="wave" src="img/wave (1).png">
+<div class="container">
+<div class="img">
+<img src="img/login.svg">
+</div>
+<div class="login-content">
+<form action="">
+<h1 class="appname">digi veh</h1>
+<img src="img/avatar.svg">
+<h2 class="title">Login</h2>
+<div class="input-div one">
+<div class="i">
+<p class="fas fa-user"></p>
+</div>
+<div class="div">
+<input type="text" class="input" placeholder="Phone Number" ng-model="username">
+</div>
+</div>
+
+<div class="input-div pass">
+<div class="i">
+<p class="fas fa-lock"></p>
+</div>
+<div class="div">
+<input type="password" class="input" placeholder= "Password" ng-model="password">
+</div>
+</div>
+<a class= "fp one" href="#">Forgot Password? </a>
+<input type="submit" class="btn" value="Login" ng-click="login ()">
+<a class= "fp two" href="registration.html">Don't have an Account? Register</a>
+</form>
+</div>
+</div>
+<script type="text/javascript" src="js/main.js"></script>
+
+</body>
+</html>
+Registration
+<!DOCTYPE html>
+<html>
+<head>
+<title>Registration</title>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
+<script src="js/reg.js"></script>
+<link rel="stylesheet" type="text/css" href="css/reg.css">
+<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body ng-app = "registration" ng-controller = "myCtrl">
+<div class="container2">
+<div class="reg-content">
+<div class="tab-content">
+<h3>Sign Up</h3>
+<div class="row register-form">
+<div class="col-md-6">
+<div class="form-group">
+<input type="text" class="form-control" placeholder="First Name *" ng-model= "fname"/>
+</div>
+</div>
+<div class="col-md-6">
+<div class="form-group">
+<input type="text" class="form-control" placeholder="Last Name *" ng-model= "lname" />
+</div>
+</div>
+<div class="col-md-6">
+<div class="form-group">
+<input type="text" class="form-control" placeholder="Phone Number *" ng-model= "num" />
+</div>
+</div>
+<div class="col-md-6">
+<div class="form-group">
+<input type="text" class="form-control" placeholder="Email *" ng-model= "email" />
+<div id='msg-error' style='color: red; margin-bottom: 20px; display: none ;'>{{ errorMsg}} </div>
+</div>
+</div>
+<div class="col-md-12">
+<div class="form-group">
+<input type="password" class="form-control" placeholder="Password *" ng-model= "pwd"/>
+</div>
+</div>
+<div class="col-md-12">
+<div class="form-group">
+<select class="form-control" ng-change = "select Role ()" ng-model = "role">
+<option value="none" ng-selected = "true" selected disabled hidden>Select Role</option>
+<option value="RT">RTO</option>
+<option value="IO">Insurance Officer</option>
+<option value="PO">Pollution Officer</option>
+<option value="TP">Traffic Police</option>
+<option value="GU">General User</option>
+</select>
+</div>
+</div>
+
+<div class="col-md-6" id ="userid">
+<div class="form-group">
+<input type="text" class="form-control" placeholder="Id Num*" ng-model= "idnum"/>
+</div>
+</div>
+<div class="col-md-6" id="userid2">
+<div class="form-group">
+<input type="file" class="form-control" name="file" file-model="idUpload"/>
+</div>
+</div>
+</div>
+<input type="button" class="btn" value="Sign Up" ng-click= "saveUser()">
+<a class= "fp two" href="login.html">Already have an Account? Sign In</a>
+</div>
+
+</div>
+<div class="img">
+<img src="img/reg.svg">
+</div>
+</div>
+
+<img class="wave" src="img/wave.png">
+</body>
+</html>
+Back end
+Settings
+"""
+Django settings for mbitsprjct project.
+
+Generated by 'django-admin start project' using Django 3.1.1.
+
+For more information on this file, see
+https://docs.djangoproject.com/en/3.1/topics/settings/
+
+For the full list of settings and their values, see
+https://docs.djangoproject.com/en/3.1/ref/settings/
+"""
+
+from pathlib import Path
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path (__file__).resolve ().parent. parent
+
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = '=q@7iull (xl-$@x5d7efm&0%vo#46dmzgmau#t=ogu0vq_2*2y'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = []
+
+
+# Application definition
+
+INSTALLED_APPS = [
+'django.contrib.admin',
+'django.contrib.auth',
+'django.contrib.contenttypes',
+'django.contrib.sessions',
+'django.contrib.messages',
+'django.contrib.staticfiles',
+'miniprjct',
+'rest_framework',
+]
+
+MIDDLEWARE = [
+'django.middleware.security.SecurityMiddleware',
+'django.contrib.sessions.middleware.SessionMiddleware',
+'django.middleware.common.CommonMiddleware',
+'django.middleware.csrf.CsrfViewMiddleware',
+'django.contrib.auth.middleware.AuthenticationMiddleware',
+'django.contrib.messages.middleware.MessageMiddleware',
+'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+ROOT_URLCONF = 'mbitsprjct.urls'
+
+TEMPLATES = [
+{
+'BACKEND': 'django.template.backends.django.DjangoTemplates',
+'DIRS': [],
+'APP_DIRS': True,
+'OPTIONS': {
+'context_processors': [
+'django.template.context_processors.debug',
+'django.template.context_processors.request',
+'django.contrib.auth.context_processors.auth',
+'django.contrib.messages.context_processors.messages',
+],
+},
+},
+]
+
+WSGI_APPLICATION = 'mbitsprjct.wsgi.application'
+
+
+# Database
+# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+DATABASES = {
+'default': {
+'ENGINE': 'django.db.backends.mysql',
+'NAME': 'amalmini',
+'USER': 'root',
+'PASSWORD': '',
+'HOST': '127.0.0.1',
+'PORT': 3306
+
+}
+}
+# Password validation
+# https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
+
+AUTH_PASSWORD_VALIDATORS = [
+{
+'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+},
+{
+'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+},
+{
+'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+},
+{
+'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+},
+]
+
+
+# Internationalization
+# https://docs.djangoproject.com/en/3.1/topics/i18n/
+
+LANGUAGE_CODE = 'en-us'
+
+TIME_ZONE = 'UTC'
+
+USE_I18N = True
+
+USE_L10N = True
+
+USE_TZ = True
+
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/3.1/howto/static-files/
+
+STATIC_URL = '/static/'
+
+
+model
+from django.db import models
+
+from django.utils import time zone
+from django.contrib.auth.models import User as AuthUser
+
+
+class Role (models.Model):
+roleChoices = (('RT', 'RTO'), ('IO', 'Insurer'), ('PO', 'Pollution Officer'), ('TP', 'Traffic Police'), ('GU', 'General User'))
+stChoices = (('A', 'ACCEPTED'), ('R', 'REJECTED'), ('P', 'PENDING'))
+
+user = models.ForeignKey (AuthUser, on delete= models. CASCADE)
+role = models.CharField(max_length=30, choices=roleChoices)
+
+idnum = models.CharField (max_length=30, blank=True, null= True)
+idUpload = models.FileField()
+status = models.CharField(max_length=20, choices=stChoices)
+
+
+
+class Vehicle (models.Model):
+
+fuelChoice = (('P','petrol'), ('D','disel'), ('L','lpg'), ('E','electric'))
+vehicleChoice = (('2','twowheeler'), ('3','threewheeler'), ('4','fourwheeler'), ('H','heavy'))
+
+registerationNo = models.CharField (max_length = 15)
+registeredOwner = models.CharField (max_length = 25)
+
+make = models.CharField(max_length = 20)
+model= models.CharField(max_length = 20)
+month Year =models.DateField ()
+
+color = models.CharField (max_length = 15)
+typeVehicle = models.CharField (max_length = 3, choices=  vehicleChoice)
+
+engineDisplacement = models.DecimalField(default=0.00, max_digits=10, decimal_places=2)
+chassesNo = models.CharField(max_length = 50, blank = True)
+
+rcbookUpload = models.FileField(upload_to= "static", max_length=254, null= True)
+fuelType = models.CharField(max_length = 15, choices = fuelChoice)
+
+engineNo = models.DecimalField(default=0.00, max_digits=20, decimal_places=2)
+inspectedBy = models.CharField(max_length = 25)
+inspectedDate = models.DateField()
+
+
+
+class Insurance (models.Model):
+
+statusChoice = ( ('ACTIVE','active'), ('EXPIRED','expired'))
+insuranceChoice = ( ('THIRDPARTY','third_party'), ('COMPREHENSIVE’, ‘comprehensive'))
+
+policyNo = models.CharField(max_length=100)
+registerationNo = models.ForeignKey(Vehicle, on_delete = models. CASCADE)
+
+phoneno = models.CharField(max_length=12)
+
+email = models.CharField(max_length = 20)
+agencyName = models.CharField(max_length = 25)
+insuranceType = models.CharField(max_length=15, choices= insuranceChoice )
+
+validTo = models.DateField()
+validFrom = models.DateField()
+status = models.CharField(max_length = 10, choices = statusChoice)
+remarks = models.CharField(max_length = 500, blank = True)
+
+
+class Pollution (models.Model):
+
+serial_no = models.IntegerField (primary_key = True, default = '')
+registerationNo = models.ForeignKey ( Vehicle, on_delete = models.CASCADE)
+
+test_code = models.IntegerField ()
+test_result = models.DecimalField (default=0.00, max_digits=10, decimal_places=2)
+
+testDate = models.DateField()
+validTo = models.DateField()
+remark = models.CharField (max_length = 500, blank = True)
+
+class ImageUpload (models.Model):
+user = models.OneToOneField (AuthUser, on_delete=models.CASCADE, related_name='fileuploads')
+fileName = models.FileField (upload_to="filefolder/", max_length=254)
+dateUploaded = models.DateTimeField (auto_now_add=True)
+
+class Complaint (models.Model):
+
+complaintChoice = (('S','stolen'), ('TV','traffic_vialation'))
+
+complaint_no = models.IntegerField (primary_key = True, default= '')
+registerationNo = models.ForeignKey ( Vehicle, on_delete = models.CASCADE)
+description = models.CharField (max_length = 500)
+
+complaintType = models.CharField (max_length = 3, choices=complaintChoice)
+complaint_date = models.DateField ()
+status = models.IntegerField ()
+reported_by = models.CharField (max_length = 100)
+Serilizer
+from django.contrib.auth.models import User as AuthUser
+
+import logging,re
+from rest_framework import serializers
+from miniprjct.models import *
+
+
+logger = logging.getLogger('django')
+
+class RegSerializer(serializers.ModelSerializer):
+mobileno = serializers.CharField(source='username')
+first_name = serializers.CharField ()
+last_name = serializers.CharField ()
+email = serializers.EmailField ()
+
+
+class Meta:
+
+model = AuthUser
+error messages = {"mobileno": {"required": "Please enter a valid mobile number"}}
+fields = ['first_name','last_name','email','password','mobileno']
+
+def validate_first_name(self, first_name):
+if len(first_name) > 0:
+return first_name
+else:
+raise serializers.ValidationError("first name cannot be empty")
+
+def validate_last_name(self, last_name):
+if len(last_name) > 0:
+return last_name
+else:
+raise serializers.ValidationError ("last name cannot be empty")
+
+def validate_email(self, email):
+user = AuthUser.objects.filter(email = email).first()
+if user:
+raise serializers.ValidationError("email already exists")
+else:
+return email
+
+def validate_mobileno(self, mobileno):
+user = AuthUser.objects.filter(username = mobileno).first()
+
+if user:
+pass
+Pattern = re.compile ("^ [0-9]*$")
+# Pattern = re.compile ("^ (\+) {1} [0-9]*$")
+
+if Pattern.match(mobileno):
+return mobileno
+else:
+logger.info ('invalid')
+raise serializers.ValidationError ("invalid mobile number")
+
+
+
+class VehicleSerializer(serializers.ModelSerializer):
+
+class Meta:
+model = Vehicle
+
+fields = ['registerationNo','registeredOwner','make', 'model', 'month_Year', 'color', 'typeVehicle',
+'engineDisplacement','chassesNo', 'rcbookUpload', 'fuelType', 'engineNo','inspectedBy','inspectedDate']
+
+
+class InsuranceSerializer(serializers.ModelSerializer):
+
+class Meta:
+model = Insurance
+fields = '__all__'
+
+class PollutionSerializer(serializers.ModelSerializer):
+
+class Meta:
+model = Pollution
+# fields = ['serial_no','registerationNo','test_code', 'test_result', 'testDate', 'validTo', 'remark']
+fields = '__all__'
+
+class ComplaintSerializer(serializers.ModelSerializer):
+
+class Meta:
+model = Complaint
+# fields = ['complaint_no','registerationNo','discription', 'complaintType','complaint_date'. 'status', 'reported_by']
+fields = '__all__'
+
+
+class FileUploadSerializer(serializers.ModelSerializer):
+class Meta:
+model = ImageUpload
+fields = ['fileName']
+views
+from django.shortcuts import render
+
+from django.http import HttpResponse
+from django.conf import settings
+from django.contrib.auth.models import User as AuthUser
+from django.contrib.auth. Forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import authenticate
+
+from django.http import HttpResponse
+from django.db.models import Q
+
+from rest_framework. Views import APIView, status
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework import status, viewsets
+
+from miniprjct import json as jss
+import json,logging,json
+from miniprjct.serializer import RegSerializer, VehicleSerializer, FileUploadSerializer
+from miniprjct.models import *
+from miniprjct import serializer as mini_ser
+
+logger = logging.getLogger ('django')
+
+@api_view (['POST'])
+@permission_classes ([AllowAny])
+def register(request):
+ser = RegSerializer (data=request. Data)
+reply = {}
+rl = request.data['role']
+if not ser.is_valid():
+for err in ser.errors:
+#   if err=='mobileno':
+#         continue
+reply['message'] = ser.errors [err][0]
+reply['status'] = "ERROR"
+reply['error_code'] = "INVALID_" + err.upper()
+dict_obj = json.dumps (reply)
+return HttpResponse(dict_obj, status=status.HTTP_400_BAD_REQUEST)
+
+try:
+user = AuthUser.objects.filter(username = request.data['mobileno']).first()
+if user:
+reply['message'] = ser.errors[err][0]
+reply['status'] = "DUPLICATE ENTRY"
+reply['error_code'] = "INVALID_" + err.upper()
+
+else:
+user = ser.save()
+user.set_password (request.data ['password'])
+user. save ()
+
+
+role = Role ()
+role.user = user
+role.role = rl
+if rl != 'GU':
+role.status = 'P'
+else:
+role.status= 'A'
+if 'idnum' in request.data:
+role.idnum = request.data['idnum']
+role.save()
+
+except Exception as e:
+print (str (e))
+reply ['status'] = "ERROR"
+reply ['message'] = "Server: User not created. Please contact support or retry."
+reply['error_code'] = "DB_CREATE_FAILED"
+dict_obj = json.dumps (reply)
+return HttpResponse (json.dumps (reply), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+reply['status'] = "SUCCESS"
+reply ['message'] = "Signup was successful"
+dict_obj = json.dumps (reply)
+return HttpResponse(dict_obj, status=status.HTTP_201_CREATED)
+
+
+@api_view (['GET'])
+@permission_classes ([AllowAny])
+def getUser (request):
+reply = {}
+st = request.GET.get('status')
+try:
+userList = AuthUser.objects.all()
+if 'uname' in request.GET:
+uname = request.GET.get('uname')
+userList = AuthUser.objects.filter(Q(first_name__icontains= uname) | Q(last_name__icontains= uname))
+
+userDict = []
+for user in userList:
+role = Role.objects.filter(user= user).first()
+if role.status == st:
+reply = {}
+reply['uid'] = user.id
+reply['uname'] = user.first_name + " " + user.last_name
+reply['mail'] = user.email
+reply['num'] = user.username
+reply['role'] = role.role
+reply['idnum'] = role.idnum
+userDict.append(reply)
+
+return HttpResponse(json.dumps(userDict), status= status.HTTP_202_ACCEPTED)
+
+except Exception as e:
+reply['status'] = "ERROR"
+reply['message'] = str(e)
+return HttpResponse(reply, status = status.HTTP_400_BAD_REQUEST)
+
+
+
+@api_view(['POST'])
+@permission_classes ([AllowAny])
+def login(request):
+reply = {}
+uname = request.POST.get('username')
+pwd = request.POST.get('password')
+try:
+# response = HttpResponse ()
+if uname != None and pwd != None:
+user = authenticate(username = uname, password = pwd)
+if user is not None:
+return HttpResponse ('Login Success', status = status.HTTP_202_ACCEPTED)
+else:
+return HttpResponse('Invalid Login Credentials',  status = status.HTTP_400_BAD_REQUEST)
+else:
+return HttpResponse('Invaid Login Details')
+
+except Exception as ex:
+reply ['status'] = "ERROR"
+reply['message'] = str (ex)
+print (str(ex))
+
+return HttpResponse (status = status.HTTP_400_BAD_REQUEST)
+
+
+
+
+class VehicleViewset (viewsets.ModelViewSet):
+
+queryset = Vehicle.objects.all ()
+model = Vehicle
+serializer_class = mini_ser. VehicleSerializer
+
+def create (self, request):
+try:
+# is_many = True if isinstance (request.data, list) else False
+serializer = self.get_serializer (data=request.data)
+serializer.is_valid (raise_exception=True)
+self.perform_create (serializer)
+# headers = self.get_success_headers (serializer.data)
+return Response (serializer.data, status=status.HTTP_201_CREATED)
+
+except Exception as e:
+print (e)
+return Response ("Error Occurred", status=status.HTTP_400_BAD_REQUEST)
+
+
+regNum = request.GET.get ('regnum')
+try:
+reply = {}
+vehDetails = Vehicle.objects.filter (registerationNo = regNum).first()
+print(vehDetails)
+if vehDetails is not None:
+reply['regNum'] = regnum
+reply['regOwner'] = vehDetails. RegisteredOwner
+reply['make'] = vehDetails.make
+reply['model'] = vehDetails.model
+reply['month'] = str(vehDetails.month_Year)
+reply['color'] = vehDetails.color
+reply['type'] = vehDetails.typeVehicle
+reply['cc'] = str(vehDetails.engineDisplacement)
+reply['chnum'] = vehDetails.chassesNo
+reply['fuel'] = vehDetails.fuelType
+reply['enginenum'] = str(vehDetails.engineNo)
+return HttpResponse(json.dumps(reply), status= status.HTTP_202_ACCEPTED)
+else:
+return HttpResponse(status = status.HTTP_204_NO_CONTENT)
+
+except Exception as e:
+reply = {}
+reply['status'] = "ERROR"
+print(e)
+reply['message'] = str(e)
+return HttpResponse(reply, status = status.HTTP_400_BAD_REQUEST)
+
+class InsuranceViewset(viewsets.ModelViewSet):
+queryset = Insurance.objects.all()
+serializer_class = mini_ser.InsuranceSerializer
+model = Insurance
+
+def create(self, request):
+try:
+serializer = self.get_serializer(data=request.data)
+serializer.is_valid (raise_exception = True)
+self.perform_create (serializer)
+return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+except Exception as e:
+print("ERROR" + str(e))
+return Response("Error Occurred", status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class PollutionViewset(viewsets.ModelViewSet):
+
+queryset = Pollution.objects.all()
+model = Pollution
+serializer_class = mini_ser.PollutionSerializer
+
+def create(self, request):
+try:
+serializer = self.get_serializer (data=request.data)
+serializer.is_valid (raise_exception=True)
+self.perform_create (serializer)
+headers = self.get_success_headers(serializer.data)
+return Response (serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+except Exception as e:
+print (str (e))
+return Response("Bad Request", status=status.HTTP_400_BAD_REQUEST)
+
+
+def list (self, request, *args, **kwargs):
+
+serNo = request.GET.get('serialNo')
+try:
+reply = {}
+polDetails = Pollution.objects.filter(serial_no = serNo).first()
+print(polDetails)
+if polDetails is not None:
+reply['serNo'] = serNo
+reply['registerationNo'] = polDetails.registerationNo
+reply['test_code'] = polDetails.test_code
+reply['test_result'] = polDetails.test_result
+reply['testDate'] = polDetails.testDate
+reply['validTo'] = polDetails.validTo
+reply['remark'] = polDetails.remark
+
+return HttpResponse (json.dumps(reply), status= status.HTTP_202_ACCEPTED)
+else:
+return HttpResponse(status = status.HTTP_204_NO_CONTENT)
+
+except Exception as e:
+reply = {}
+reply['status'] = "ERROR"
+print(e)
+reply['message'] = str(e)
+return HttpResponse(reply, status = status.HTTP_400_BAD_REQUEST)
+
+class ComplaintViewset(viewsets.ModelViewSet):
+
+queryset = Complaint.objects.all()
+model = Complaint
+serializer_class = mini_ser. ComplaintSerializer
+
+def create(self, request):
+try:
+serializer = self.get_serializer(data=request.data)
+serializer.is_valid (raise_exception=True)
+self.perform_create (serializer)
+headers = self.get_success_headers(serializer.data)
+return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+except Exception as e:
+print (str(e))
+return Response("Bad Request", status=status.HTTP_400_BAD_REQUEST)
+
+
+def list(self, request, *args, **kwargs):
+
+serNo = request.GET.get('serialNo')
+try:
+reply = {}
+comDetails = Complaint.objects.filter(serial_no = serNo).first()
+print(polDetails)
+if polDetails is not None:
+reply['complaint_no'] = complaint_no
+reply['registerationNo'] = comDetails.registerationNo
+reply['discription'] = comDetails.discription
+reply['complaintType'] = comDetails.complaintType
+reply['complaint_date'] = comDetails.complaint_date
+reply['status'] = comDetails.status
+reply['reported_by'] = comDetails.reported_by
+
+
+return HttpResponse(json.dumps(reply), status= status.HTTP_202_ACCEPTED)
+else:
+return HttpResponse(status = status.HTTP_204_NO_CONTENT)
+
+except Exception as e:
+reply = {}
+reply['status'] = "ERROR"
+print(e)
+reply['message'] = str(e)
+return HttpResponse(reply, status = status.HTTP_400_BAD_REQUEST)
+
+
+# class FileListAPI(APIView):
+
+#     # permission_classes = [IsAuthenticated]
+
+#     def get (self, request, format=None):
+#         filelist = ImageUpload.objects.all()
+#         serializer = mini_ser.FileUploadSerializer (filelist, many = True)
+#         Return Response (data=serializer.data, status=status.HTTP_200_OK)
+
+#     def post (self, request, format=None):
+#         serializer = mini_ser.FileUploadSerializer (data = request.data)
+#         print(serializer)
+#         reply = {}
+#         dict_obj = []
+#         if serializer.is_valid ():
+#             print (serializer)
+#             print (request.data ['UploadFile'])
+#             filelist = Filelist ()
+#             filelist.user = request.user
+#             filelist.fileName = request.data['UploadFile']
+#             filelist.save ()
+#             reply['status'] = "SUCCESS"
+#             reply['message'] = "File Uploaded sucessfully"
+#             dict_obj = json.dumps (reply)
+#             return HttpResponse (dict_obj, status=status.HTTP_201_CREATED)
+
+#         else:
+#             for err in serializer.errors:
+#                 reply ['message'] = serializer.errors [err][0]
+#                 reply['status'] = "ERROR"
+#                 reply['error_code'] = "INVALID_"+err.upper()
+#                 dict_obj = json.dumps (reply)
+#             Return HttpResponse (dict_obj, status=status.HTTP_400_BAD_REQUEST)
+
+class fileuploadViewSet (viewsets.ModelViewSet):
+serializer_class = FileUploadSerializer
+queryset = ImageUpload.objects.all()
+
+
+
+# def bar (self):
+#     print ("the mundane")
+#     bar = _decorator(bar
+
+
+
+# @decorators. action (
+#     detail=True,
+#     methods=['PUT'],
+#     serializer_class=FileUploadSerializer,
+#     parser_classes= [parsers.MultiPartParser],
+# )
+
+def fileupload (self, request, pk):
+
+obj = self.get_object()
+serializer = self.serializer_class (obj, data=request. data, partial=True)
+if serializer.is_valid ():
+serializer.save ()
+return HttpResponse.Response (serializer.data)
+
+return HttpResponse (serializer.errors ,status = status.HTTP_400_BAD_REQUEST)
+
+
